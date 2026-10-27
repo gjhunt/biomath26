@@ -1,0 +1,4 @@
+[tool.nbdev]
+   jupyter_hooks = true
+   clear_all = true
+   clean_ids = true

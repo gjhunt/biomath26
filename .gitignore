@@ -1,0 +1,60 @@
+# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+.eggs/
+.venv/
+.env
+env/
+venv/
+.Python
+
+# -------------------------
+# Jupyter
+# -------------------------
+.ipynb_checkpoints/
+*.ipynb_checkpoint
+*.ipynb_checkpoints/
+
+# -------------------------
+# R
+# -------------------------
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+# -------------------------
+# Data & Logs
+# -------------------------
+*.log
+setup.log
+
+# -------------------------
+# Build / Output / Figures
+# -------------------------
+*.pdf
+pdf/
+
+# -------------------------
+# OS-specific junk
+# -------------------------
+.DS_Store
+Thumbs.db
+
+#--------------------------
+# Ignore Folders
+#--------------------------
+_data/*
+_cache/*
+_build/*
+.cache/*
+.data/*
+.build/*
+
+*.bundle

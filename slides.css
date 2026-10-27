@@ -1,0 +1,18 @@
+:root { --r-main-font: "Aptos", "DejaVu Sans", sans-serif; --r-heading-font: "Aptos", "DejaVu Sans", sans-serif; --r-main-font-size: 30px; --r-main-color: #183b46; --r-heading-color: #102f3a; --r-link-color: #087e8b; --r-background-color: #fbfcfa; }
+.reveal h1 { font-size: 2.3em; }
+.reveal h2 { font-size: 1.5em; margin-bottom: .7em; }
+.reveal p, .reveal li { line-height: 1.35; }
+.reveal li { margin-bottom: .32em; }
+.reveal strong { color: #087e8b; }
+.reveal table { font-size: .85em; margin: .7em auto; }
+.reveal table th { border-bottom: 2px solid #087e8b; }
+.reveal table td, .reveal table th { padding: .32em .6em; }
+.reveal .source { font-size: .48em; color: #61747a; margin-top: 1.5em; }
+.reveal svg { max-height: 345px; width: 100%; }
+.reveal #title-slide { color: #fff; }
+.reveal #title-slide h1, .reveal #title-slide .subtitle { color: #fff; }
+.reveal #title-slide .quarto-title-author { color: #b9ddd8; }
+
+.reveal #title-slide h1 { font-size: 1.8em; line-height: 1.18; }
+.reveal #title-slide .quarto-title-author { font-size: .7em; line-height: 1.5; max-width: 950px; margin: 1.5em auto 0; }
+.reveal blockquote { width: 95%; box-shadow: none; border-left: 4px solid #087e8b; padding: .1em .6em; font-size: .88em; text-align: left; }

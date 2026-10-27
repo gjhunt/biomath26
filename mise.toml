@@ -1,0 +1,38 @@
+[tools]
+python = "3.13.7"
+
+r = "4.5.2"
+
+
+[tasks.setup]
+description = "Set up Python, R, and Jupyter kernels"
+run = """
+python -m venv .venv
+
+.venv/bin/python -m pip install --upgrade pip
+
+.venv/bin/python -m pip install \
+    jupyter \
+    jupytext \
+    ipykernel \
+    nb-clean \
+    nbdev \
+    nbdime
+
+
+Rscript -e 'if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv", repos = "https://cloud.r-project.org")'
+Rscript -e 'if (!file.exists("renv.lock")) renv::init(bare = TRUE)'
+Rscript -e 'renv::install(c("pak", "IRkernel", "styler"))'
+
+
+.venv/bin/python -m ipykernel install \
+    --prefix=.venv \
+    --name=python_venv \
+    --display-name "Python (.venv)"
+
+.venv/bin/nbdev-install-hooks
+
+
+PATH="$PWD/.venv/bin:$PATH" Rscript -e 'IRkernel::installspec(name = "r_renv", displayname = "R (renv)", user = FALSE, prefix = ".venv")'
+
+"""
