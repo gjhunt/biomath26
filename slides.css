@@ -16,3 +16,29 @@
 .reveal #title-slide h1 { font-size: 1.8em; line-height: 1.18; }
 .reveal #title-slide .quarto-title-author { font-size: .7em; line-height: 1.5; max-width: 950px; margin: 1.5em auto 0; }
 .reveal blockquote { width: 95%; box-shadow: none; border-left: 4px solid #087e8b; padding: .1em .6em; font-size: .88em; text-align: left; }
+
+.reveal .figure-slide { font-size: .78em; }
+.reveal .figure-slide img { width: 100%; max-height: 430px; margin: .3em 0; }
+.reveal .figure-slide .column { padding: 0 .4em; }
+.reveal .figure-slide figure figcaption { display: none; }
+
+/* Standalone diagrams fill the slide width; do not cap them at 450px. */
+.reveal .full-figure-slide { font-size: .85em; }
+.reveal .full-figure-slide h2 { margin-bottom: .25em; }
+.reveal .full-figure-slide figure,
+.reveal .full-figure-slide .quarto-figure {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+.reveal .full-figure-slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: none;
+  object-fit: contain;
+  margin: 0;
+}
+.reveal .full-figure-slide > p { margin: .3em 0; }
+.reveal .full-figure-slide figcaption { display: none; }

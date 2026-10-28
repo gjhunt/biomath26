@@ -506,6 +506,30 @@ margin: 0 0.8em 0.2em -1em;  vertical-align: middle;
 .reveal #title-slide h1 { font-size: 1.8em; line-height: 1.18; }
 .reveal #title-slide .quarto-title-author { font-size: .7em; line-height: 1.5; max-width: 950px; margin: 1.5em auto 0; }
 .reveal blockquote { width: 95%; box-shadow: none; border-left: 4px solid #087e8b; padding: .1em .6em; font-size: .88em; text-align: left; }
+.reveal .figure-slide { font-size: .78em; }
+.reveal .figure-slide img { width: 100%; max-height: 430px; margin: .3em 0; }
+.reveal .figure-slide .column { padding: 0 .4em; }
+.reveal .figure-slide figure figcaption { display: none; }
+
+.reveal .full-figure-slide { font-size: .85em; }
+.reveal .full-figure-slide h2 { margin-bottom: .25em; }
+.reveal .full-figure-slide figure,
+.reveal .full-figure-slide .quarto-figure {
+width: 100%;
+margin: 0;
+text-align: center;
+}
+.reveal .full-figure-slide img {
+display: block;
+width: 100%;
+height: auto;
+max-width: 100%;
+max-height: none;
+object-fit: contain;
+margin: 0;
+}
+.reveal .full-figure-slide > p { margin: .3em 0; }
+.reveal .full-figure-slide figcaption { display: none; }
 </style>
   <style type="text/css">.reveal
 div.sourceCode
@@ -1176,60 +1200,41 @@ presented by Greg Hunt
 <h2>Models, hypotheses, and statistical tests</h2>
 <p><strong>Model → test hypothesis → discrepancy statistic → P value</strong></p>
 <ul>
-<li>A <strong>model</strong> mathematically describes data variability, assuming how data were collected, analyzed, and selected for reporting.</li>
-<li>A <strong>test hypothesis</strong> specifies an effect, often <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>:</mo><mi>θ</mi><mo>=</mo><msub><mi>θ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">H:\theta=\theta_0</annotation></semantics></math>. Commonly use <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>:</mo><mi>θ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">H:\theta=0</annotation></semantics></math> called a <strong>null hypothesis</strong>.</li>
-<li>Often use a <strong>test statistic</strong> measures discrepancy between the data and the hypothesis.</li>
+<li>A <strong>model</strong> mathematically describes data variability, assuming how data were collected, analyzed, and selected for reporting. Often there are some <strong>parameters</strong> of our model, say <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>, that we’re interested in.</li>
+<li>A <strong>test hypothesis</strong> typically specifies something about <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>, often <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>:</mo><mi>θ</mi><mo>=</mo><msub><mi>θ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">H:\theta=\theta_0</annotation></semantics></math>. Commonly use <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>:</mo><mi>θ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">H:\theta=0</annotation></semantics></math> called a <strong>null hypothesis</strong>.</li>
+<li>Often use a <strong>test statistic</strong> to measure discrepancy between data and the hypothesis/assumptions.</li>
+<li>Summarize test stat. with a <strong>P value</strong>:</li>
 </ul>
 <blockquote>
 <p>“The P value is then the probability that the chosen test statistic would have been at least as large as its observed value if every model assumption were correct, including the test hypothesis.”</p>
 <p>— Greenland et al., p. 339</p>
 </blockquote>
-<p>The probability includes the observed discrepancy <strong>and more extreme discrepancies</strong>.</p>
 <div class="source">
 <p>Greenland et al. (2016), pp. 338–339; quotation p. 339.</p>
 </div>
-<aside class="notes">
-<p>Introduce the whole testing chain before discussing its interpretation. Every method of statistical inference depends on assumptions, even nonparametric methods. The model includes sampling, allocation, dependence, missingness, and selection of analyses. Optional normal example: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mover><mi>θ</mi><mo accent="true">̂</mo></mover><mo>−</mo><msub><mi>θ</mi><mn>0</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">Z=(\widehat\theta-\theta_0)/s</annotation></semantics></math>, with known standard error s; under the point hypothesis and normal model Z is standard normal. For a two-sided test use absolute Z as the discrepancy statistic. Standard error describes variability of the estimate across studies. Formally, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mo>Pr</mo><mo stretchy="false" form="prefix">{</mo><mi>T</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>D</mi><mo>*</mo></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>≥</mo><mi>T</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>D</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>∣</mo><mi>H</mi><mo>,</mo><mi>A</mi><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">P=\Pr\{T(D^*)\geq T(D_{\mathrm{obs}})\mid H,A\}</annotation></semantics></math>, where D star is hypothetical repeated data, H the specified hypothesis, and A other assumptions. This is not a probability that H is true. Composite hypotheses need appropriate calibration.</p>
-<style type="text/css">
-span.MJX_Assistive_MathML {
-position:absolute!important;
-clip: rect(1px, 1px, 1px, 1px);
-padding: 1px 0 0 0!important;
-border: 0!important;
-height: 1px!important;
-width: 1px!important;
-overflow: hidden!important;
-display:block!important;
-}</style></aside>
 </section>
 <section id="a-little-notation-what-varies-and-what-is-assumed" class="slide level2">
 <h2>A little notation: what varies, and what is assumed?</h2>
-<p>Let D be the data, θ the effect, and A the other model assumptions. A point hypothesis specifies <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>:</mo><mi>θ</mi><mo>=</mo><msub><mi>θ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">H:\theta=\theta_0</annotation></semantics></math>.</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mo>Pr</mo><mspace width="-0.167em"></mspace><mrow><mo stretchy="true" form="prefix">{</mo><mi>T</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>D</mi><mo>*</mo></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>≥</mo><mi>T</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>D</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>∣</mo><mi>θ</mi><mo>=</mo><msub><mi>θ</mi><mn>0</mn></msub><mo>,</mo><mi>A</mi><mo stretchy="true" form="postfix">}</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">P=\Pr\!\left\{T(D^*)\ge T(D_{\mathrm{obs}})\mid\theta=\theta_0,A\right\}.</annotation></semantics></math></p>
+<p>Let</p>
 <ul>
-<li><strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><annotation encoding="application/x-tex">D_\mathrm{obs}</annotation></semantics></math></strong>: the observed data; <strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>D</mi><mo>*</mo></msup><annotation encoding="application/x-tex">D^*</annotation></semantics></math></strong>: hypothetical data under H and A.</li>
-<li><strong>T</strong>: a discrepancy statistic; larger values mean less agreement.</li>
-<li>Probability is over <strong>hypothetical data</strong>, with θ₀ and A held fixed.</li>
+<li><strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>D</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><annotation encoding="application/x-tex">D_\mathrm{obs}</annotation></semantics></math></strong> be the observed data,</li>
+<li><strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math></strong> the effect,</li>
+<li><strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></strong> the other model assumptions,</li>
+<li><strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>H</mi><annotation encoding="application/x-tex">H</annotation></semantics></math></strong> the point hypothesis <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo>:</mo><mi>θ</mi><mo>=</mo><msub><mi>θ</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">H:\theta=\theta_0</annotation></semantics></math>,</li>
+<li><strong>T</strong> the discrepancy statistic (larger values mean less agreement).</li>
+<li><strong><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>D</mi><mo>*</mo></msup><annotation encoding="application/x-tex">D^*</annotation></semantics></math></strong>: other hypothetical data under H and A.</li>
 </ul>
-<p>For example a <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-test:</p>
+<p>Then the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>P</mi><annotation encoding="application/x-tex">P</annotation></semantics></math> value is:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mo>Pr</mo><mspace width="-0.167em"></mspace><mrow><mo stretchy="true" form="prefix">{</mo><mi>T</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>D</mi><mo>*</mo></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>≥</mo><mi>T</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>D</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>∣</mo><mi>θ</mi><mo>=</mo><msub><mi>θ</mi><mn>0</mn></msub><mo>,</mo><mi>A</mi><mo stretchy="true" form="postfix">}</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">P=\Pr\!\left\{T(D^*)\ge T(D_{\mathrm{obs}})\mid\theta=\theta_0,A\right\}.</annotation></semantics></math></p>
+<p>This probability is over <strong>hypothetical data</strong>, with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>θ</mi><mn>0</mn></msub><annotation encoding="application/x-tex">\theta_0</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> held fixed.</p>
+</section>
+<section id="p-values-the-shaded-tail-areas" class="slide level2 full-figure-slide">
+<h2>P values: the shaded tail areas</h2>
+<p>For example a <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-test might be:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mfrac><mrow><mover><mi>X</mi><mo accent="true">‾</mo></mover><mo>−</mo><msub><mi>θ</mi><mn>0</mn></msub></mrow><mrow><mi>s</mi><mi>/</mi><msqrt><mi>n</mi></msqrt></mrow></mfrac><mo>,</mo><mspace width="2.0em"></mspace><mi>P</mi><mo>=</mo><mo>Pr</mo><mrow><mo stretchy="true" form="prefix">{</mo><mrow><mo stretchy="true" form="prefix">|</mo><msup><mi>t</mi><mo>*</mo></msup><mo stretchy="true" form="postfix">|</mo></mrow><mo>≥</mo><mrow><mo stretchy="true" form="prefix">|</mo><msub><mi>t</mi><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">b</mi><mi mathvariant="normal">s</mi></mrow></msub><mo stretchy="true" form="postfix">|</mo></mrow><mo>∣</mo><mi>θ</mi><mo>=</mo><msub><mi>θ</mi><mn>0</mn></msub><mo>,</mo><mi>A</mi><mo stretchy="true" form="postfix">}</mo></mrow></mrow><annotation encoding="application/x-tex">t=\frac{\bar{X}-\theta_0}{s/\sqrt{n}},\qquad
 P=\Pr\left\{|t^*|\ge|t_{\mathrm{obs}}| \mid\theta=\theta_0,A\right\}</annotation></semantics></math></p>
-<div class="source">
-<p>Greenland et al. (2016), pp. 338–339. Notation and normal-model example added.</p>
-</div>
-<aside class="notes">
-<p>Use this as a translation of the opening verbal definition. Theta is fixed but unknown; theta zero is the candidate value being tested. Other candidate values can be tested with the same construction. The reference distribution of Z star assumes the point hypothesis and A. Known standard error and exact normality are illustrative assumptions, not universal properties of estimators; estimated SEs may require a t distribution or an asymptotic approximation. A is not limited to the distributional assumptions written in a formula: it includes design and reporting assumptions. The definition includes the observed discrepancy and more extreme discrepancies; it is not the probability of exactly the observed data. Composite one-sided hypotheses need appropriate calibration.</p>
-<style type="text/css">
-span.MJX_Assistive_MathML {
-position:absolute!important;
-clip: rect(1px, 1px, 1px, 1px);
-padding: 1px 0 0 0!important;
-border: 0!important;
-height: 1px!important;
-width: 1px!important;
-overflow: hidden!important;
-display:block!important;
-}</style></aside>
+
+<svg id="svg_2b7e960ba9667e8f2281" role="img" aria-label="Student t distribution with 19 degrees of freedom. Both tails beyond minus and plus 2.1 are shaded; their total probability is approximately 0.0493." alt="Student t distribution with 19 degrees of freedom. Both tails beyond minus and plus 2.1 are shaded; their total probability is approximately 0.0493." viewBox="0 0 1000 480" aria-labelledby="title desc" width="1000" height="480"><title id="svg_2b7e960ba9667e8f2281_title">A two-sided t-test P value</title><desc id="svg_2b7e960ba9667e8f2281_desc">Student t distribution with 19 degrees of freedom under the null hypothesis. Both tails beyond minus 2.1 and plus 2.1 are shaded. Total tail probability is approximately 0.0493. The plotted range is truncated at minus and plus 5.</desc><rect width="1000" height="480" fill="#fbfcfa" /><style>text{font-family:DejaVu Sans,sans-serif;fill:#183b46;font-size:20px}.small{font-size:17px}.axis{stroke:#183b46;stroke-width:2;fill:none}</style><text x="500" y="36" text-anchor="middle">Reference distribution under H and A</text><polygon points="70.00,350.00 70.00,349.94 71.26,349.94 72.52,349.94 73.78,349.93 75.05,349.93 76.31,349.93 77.57,349.93 78.83,349.92 80.09,349.92 81.35,349.92 82.61,349.92 83.88,349.91 85.14,349.91 86.40,349.91 87.66,349.90 88.92,349.90 90.18,349.90 91.45,349.89 92.71,349.89 93.97,349.89 95.23,349.88 96.49,349.88 97.75,349.88 99.01,349.87 100.28,349.87 101.54,349.86 102.80,349.86 104.06,349.85 105.32,349.85 106.58,349.84 107.84,349.84 109.11,349.83 110.37,349.83 111.63,349.82 112.89,349.81 114.15,349.81 115.41,349.80 116.68,349.79 117.94,349.79 119.20,349.78 120.46,349.77 121.72,349.77 122.98,349.76 124.24,349.75 125.51,349.74 126.77,349.73 128.03,349.72 129.29,349.71 130.55,349.70 131.81,349.69 133.07,349.68 134.34,349.67 135.60,349.66 136.86,349.65 138.12,349.64 139.38,349.63 140.64,349.61 141.91,349.60 143.17,349.59 144.43,349.57 145.69,349.56 146.95,349.54 148.21,349.53 149.47,349.51 150.74,349.50 152.00,349.48 153.26,349.46 154.52,349.44 155.78,349.42 157.04,349.40 158.30,349.38 159.57,349.36 160.83,349.34 162.09,349.32 163.35,349.30 164.61,349.27 165.87,349.25 167.14,349.22 168.40,349.20 169.66,349.17 170.92,349.14 172.18,349.11 173.44,349.08 174.70,349.05 175.97,349.02 177.23,348.99 178.49,348.96 179.75,348.92 181.01,348.88 182.27,348.85 183.53,348.81 184.80,348.77 186.06,348.73 187.32,348.69 188.58,348.64 189.84,348.60 191.10,348.55 192.37,348.50 193.63,348.45 194.89,348.40 196.15,348.35 197.41,348.29 198.67,348.24 199.93,348.18 201.20,348.12 202.46,348.06 203.72,347.99 204.98,347.93 206.24,347.86 207.50,347.79 208.76,347.72 210.03,347.64 211.29,347.56 212.55,347.48 213.81,347.40 215.07,347.32 216.33,347.23 217.60,347.14 218.86,347.05 220.12,346.95 221.38,346.85 222.64,346.75 223.90,346.64 225.16,346.53 226.43,346.42 227.69,346.31 228.95,346.19 230.21,346.07 231.47,345.94 232.73,345.81 233.99,345.68 235.26,345.54 236.52,345.39 237.78,345.25 239.04,345.10 240.30,344.94 241.56,344.78 242.83,344.62 244.09,344.45 245.35,344.27 246.61,344.09 247.87,343.91 249.13,343.71 250.39,343.52 251.66,343.31 252.92,343.11 254.18,342.89 255.44,342.67 256.70,342.44 257.96,342.21 259.22,341.97 260.49,341.72 261.75,341.47 263.01,341.21 264.27,340.94 265.53,340.66 266.79,340.38 268.06,340.08 269.32,339.78 270.58,339.47 271.84,339.16 273.10,338.83 274.36,338.50 275.62,338.15 276.89,337.80 278.15,337.43 279.41,337.06 280.67,336.68 281.93,336.28 283.19,335.88 284.45,335.46 285.72,335.04 286.98,334.60 288.24,334.15 289.50,333.69 290.76,333.22 292.02,332.74 293.29,332.24 294.55,331.73 295.81,331.21 297.07,330.67 298.33,330.12 299.59,329.56 300.85,328.99 302.12,328.40 303.38,327.79 304.64,327.17 305.90,326.54 307.16,325.89 308.42,325.22 309.68,324.54 310.95,323.84 312.21,323.13 313.47,322.40 314.73,321.65 315.99,320.88 317.25,320.10 318.52,319.30 319.78,318.48 321.04,317.65 322.30,316.79 322.30,350.00" fill="#d88b45" fill-opacity=".7"></polygon><polygon points="687.70,350.00 687.70,316.79 688.96,317.65 690.22,318.48 691.48,319.30 692.75,320.10 694.01,320.88 695.27,321.65 696.53,322.40 697.79,323.13 699.05,323.84 700.32,324.54 701.58,325.22 702.84,325.89 704.10,326.54 705.36,327.17 706.62,327.79 707.88,328.40 709.15,328.99 710.41,329.56 711.67,330.12 712.93,330.67 714.19,331.21 715.45,331.73 716.71,332.24 717.98,332.74 719.24,333.22 720.50,333.69 721.76,334.15 723.02,334.60 724.28,335.04 725.55,335.46 726.81,335.88 728.07,336.28 729.33,336.68 730.59,337.06 731.85,337.43 733.11,337.80 734.38,338.15 735.64,338.50 736.90,338.83 738.16,339.16 739.42,339.47 740.68,339.78 741.94,340.08 743.21,340.38 744.47,340.66 745.73,340.94 746.99,341.21 748.25,341.47 749.51,341.72 750.77,341.97 752.04,342.21 753.30,342.44 754.56,342.67 755.82,342.89 757.08,343.11 758.34,343.31 759.61,343.52 760.87,343.71 762.13,343.91 763.39,344.09 764.65,344.27 765.91,344.45 767.17,344.62 768.44,344.78 769.70,344.94 770.96,345.10 772.22,345.25 773.48,345.39 774.74,345.54 776.00,345.68 777.27,345.81 778.53,345.94 779.79,346.07 781.05,346.19 782.31,346.31 783.57,346.42 784.84,346.53 786.10,346.64 787.36,346.75 788.62,346.85 789.88,346.95 791.14,347.05 792.40,347.14 793.67,347.23 794.93,347.32 796.19,347.40 797.45,347.48 798.71,347.56 799.97,347.64 801.24,347.72 802.50,347.79 803.76,347.86 805.02,347.93 806.28,347.99 807.54,348.06 808.80,348.12 810.07,348.18 811.33,348.24 812.59,348.29 813.85,348.35 815.11,348.40 816.37,348.45 817.63,348.50 818.90,348.55 820.16,348.60 821.42,348.64 822.68,348.69 823.94,348.73 825.20,348.77 826.47,348.81 827.73,348.85 828.99,348.88 830.25,348.92 831.51,348.96 832.77,348.99 834.03,349.02 835.30,349.05 836.56,349.08 837.82,349.11 839.08,349.14 840.34,349.17 841.60,349.20 842.86,349.22 844.13,349.25 845.39,349.27 846.65,349.30 847.91,349.32 849.17,349.34 850.43,349.36 851.69,349.38 852.96,349.40 854.22,349.42 855.48,349.44 856.74,349.46 858.00,349.48 859.26,349.50 860.53,349.51 861.79,349.53 863.05,349.54 864.31,349.56 865.57,349.57 866.83,349.59 868.09,349.60 869.36,349.61 870.62,349.63 871.88,349.64 873.14,349.65 874.40,349.66 875.66,349.67 876.92,349.68 878.19,349.69 879.45,349.70 880.71,349.71 881.97,349.72 883.23,349.73 884.49,349.74 885.76,349.75 887.02,349.76 888.28,349.77 889.54,349.77 890.80,349.78 892.06,349.79 893.32,349.79 894.59,349.80 895.85,349.81 897.11,349.81 898.37,349.82 899.63,349.83 900.89,349.83 902.15,349.84 903.42,349.84 904.68,349.85 905.94,349.85 907.20,349.86 908.46,349.86 909.72,349.87 910.99,349.87 912.25,349.88 913.51,349.88 914.77,349.88 916.03,349.89 917.29,349.89 918.55,349.89 919.82,349.90 921.08,349.90 922.34,349.90 923.60,349.91 924.86,349.91 926.12,349.91 927.38,349.92 928.65,349.92 929.91,349.92 931.17,349.92 932.43,349.93 933.69,349.93 934.95,349.93 936.22,349.93 937.48,349.94 938.74,349.94 940.00,349.94 940.00,350.00" fill="#d88b45" fill-opacity=".7"></polygon><polyline points="70.00,349.94 72.18,349.94 74.35,349.93 76.53,349.93 78.70,349.92 80.88,349.92 83.05,349.92 85.22,349.91 87.40,349.90 89.57,349.90 91.75,349.89 93.93,349.89 96.10,349.88 98.28,349.87 100.45,349.87 102.62,349.86 104.80,349.85 106.97,349.84 109.15,349.83 111.32,349.82 113.50,349.81 115.68,349.80 117.85,349.79 120.03,349.78 122.20,349.76 124.38,349.75 126.55,349.73 128.72,349.72 130.90,349.70 133.07,349.68 135.25,349.66 137.43,349.64 139.60,349.62 141.78,349.60 143.95,349.58 146.12,349.55 148.30,349.53 150.47,349.50 152.65,349.47 154.82,349.44 157.00,349.40 159.18,349.37 161.35,349.33 163.53,349.29 165.70,349.25 167.88,349.21 170.05,349.16 172.22,349.11 174.40,349.06 176.58,349.01 178.75,348.95 180.93,348.89 183.10,348.82 185.28,348.75 187.45,348.68 189.62,348.60 191.80,348.52 193.97,348.44 196.15,348.35 198.33,348.25 200.50,348.15 202.67,348.05 204.85,347.93 207.03,347.81 209.20,347.69 211.38,347.56 213.55,347.42 215.72,347.27 217.90,347.12 220.08,346.95 222.25,346.78 224.42,346.60 226.60,346.41 228.78,346.21 230.95,345.99 233.12,345.77 235.30,345.53 237.47,345.28 239.65,345.02 241.83,344.75 244.00,344.46 246.17,344.15 248.35,343.83 250.53,343.50 252.70,343.14 254.88,342.77 257.05,342.38 259.22,341.97 261.40,341.54 263.58,341.09 265.75,340.61 267.92,340.11 270.10,339.59 272.27,339.05 274.45,338.47 276.62,337.87 278.80,337.24 280.98,336.58 283.15,335.89 285.32,335.17 287.50,334.42 289.68,333.63 291.85,332.80 294.02,331.94 296.20,331.04 298.38,330.11 300.55,329.13 302.72,328.11 304.90,327.04 307.08,325.93 309.25,324.77 311.42,323.57 313.60,322.32 315.78,321.02 317.95,319.66 320.12,318.25 322.30,316.79 324.48,315.28 326.65,313.70 328.82,312.07 331.00,310.38 333.18,308.62 335.35,306.81 337.52,304.93 339.70,302.98 341.88,300.98 344.05,298.90 346.23,296.76 348.40,294.55 350.57,292.27 352.75,289.92 354.93,287.51 357.10,285.02 359.28,282.46 361.45,279.83 363.62,277.13 365.80,274.36 367.97,271.52 370.15,268.60 372.33,265.62 374.50,262.57 376.67,259.45 378.85,256.26 381.03,253.01 383.20,249.69 385.38,246.31 387.55,242.87 389.72,239.37 391.90,235.81 394.07,232.19 396.25,228.53 398.43,224.81 400.60,221.05 402.78,217.24 404.95,213.39 407.12,209.51 409.30,205.60 411.47,201.65 413.65,197.69 415.83,193.70 418.00,189.70 420.18,185.68 422.35,181.67 424.53,177.65 426.70,173.64 428.88,169.64 431.05,165.66 433.22,161.70 435.40,157.77 437.57,153.87 439.75,150.01 441.93,146.20 444.10,142.45 446.27,138.75 448.45,135.12 450.62,131.56 452.80,128.08 454.98,124.69 457.15,121.38 459.32,118.18 461.50,115.07 463.68,112.08 465.85,109.20 468.03,106.43 470.20,103.80 472.38,101.30 474.55,98.93 476.72,96.70 478.90,94.62 481.07,92.69 483.25,90.91 485.43,89.29 487.60,87.84 489.78,86.54 491.95,85.41 494.12,84.46 496.30,83.67 498.47,83.06 500.65,82.62 502.82,82.35 505.00,82.26 507.18,82.35 509.35,82.62 511.53,83.06 513.70,83.67 515.88,84.46 518.05,85.41 520.22,86.54 522.40,87.84 524.58,89.29 526.75,90.91 528.93,92.69 531.10,94.62 533.27,96.70 535.45,98.93 537.62,101.30 539.80,103.80 541.97,106.43 544.15,109.20 546.33,112.08 548.50,115.07 550.67,118.18 552.85,121.38 555.02,124.69 557.20,128.08 559.38,131.56 561.55,135.12 563.73,138.75 565.90,142.45 568.08,146.20 570.25,150.01 572.42,153.87 574.60,157.77 576.78,161.70 578.95,165.66 581.12,169.64 583.30,173.64 585.48,177.65 587.65,181.67 589.82,185.68 592.00,189.70 594.18,193.70 596.35,197.69 598.53,201.65 600.70,205.60 602.88,209.51 605.05,213.39 607.22,217.24 609.40,221.05 611.57,224.81 613.75,228.53 615.93,232.19 618.10,235.81 620.28,239.37 622.45,242.87 624.62,246.31 626.80,249.69 628.97,253.01 631.15,256.26 633.32,259.45 635.50,262.57 637.68,265.62 639.85,268.60 642.02,271.52 644.20,274.36 646.38,277.13 648.55,279.83 650.73,282.46 652.90,285.02 655.07,287.51 657.25,289.92 659.42,292.27 661.60,294.55 663.77,296.76 665.95,298.90 668.12,300.98 670.30,302.98 672.48,304.93 674.65,306.81 676.83,308.62 679.00,310.38 681.18,312.07 683.35,313.70 685.52,315.28 687.70,316.79 689.88,318.25 692.05,319.66 694.23,321.02 696.40,322.32 698.57,323.57 700.75,324.77 702.93,325.93 705.10,327.04 707.28,328.11 709.45,329.13 711.62,330.11 713.80,331.04 715.97,331.94 718.15,332.80 720.32,333.63 722.50,334.42 724.68,335.17 726.85,335.89 729.03,336.58 731.20,337.24 733.38,337.87 735.55,338.47 737.72,339.05 739.90,339.59 742.07,340.11 744.25,340.61 746.43,341.09 748.60,341.54 750.77,341.97 752.95,342.38 755.12,342.77 757.30,343.14 759.48,343.50 761.65,343.83 763.82,344.15 766.00,344.46 768.17,344.75 770.35,345.02 772.52,345.28 774.70,345.53 776.88,345.77 779.05,345.99 781.23,346.21 783.40,346.41 785.58,346.60 787.75,346.78 789.93,346.95 792.10,347.12 794.27,347.27 796.45,347.42 798.62,347.56 800.80,347.69 802.98,347.81 805.15,347.93 807.32,348.05 809.50,348.15 811.68,348.25 813.85,348.35 816.02,348.44 818.20,348.52 820.38,348.60 822.55,348.68 824.73,348.75 826.90,348.82 829.07,348.89 831.25,348.95 833.43,349.01 835.60,349.06 837.77,349.11 839.95,349.16 842.12,349.21 844.30,349.25 846.48,349.29 848.65,349.33 850.82,349.37 853.00,349.40 855.18,349.44 857.35,349.47 859.52,349.50 861.70,349.53 863.88,349.55 866.05,349.58 868.23,349.60 870.40,349.62 872.57,349.64 874.75,349.66 876.92,349.68 879.10,349.70 881.27,349.72 883.45,349.73 885.62,349.75 887.80,349.76 889.98,349.78 892.15,349.79 894.33,349.80 896.50,349.81 898.68,349.82 900.85,349.83 903.02,349.84 905.20,349.85 907.38,349.86 909.55,349.87 911.73,349.87 913.90,349.88 916.07,349.89 918.25,349.89 920.43,349.90 922.60,349.90 924.77,349.91 926.95,349.92 929.12,349.92 931.30,349.92 933.48,349.93 935.65,349.93 937.82,349.94 940.00,349.94" fill="none" stroke="#087e8b" stroke-width="4"></polyline><path d="M70 65V350H940" class="axis" /><path d="M157.0 350v8" class="axis" /><text x="157.0" y="386" text-anchor="middle">-4</text><path d="M322.29999999999995 350v8" class="axis" /><text x="322.29999999999995" y="386" text-anchor="middle">-2.1</text><path d="M505.0 350v8" class="axis" /><text x="505.0" y="386" text-anchor="middle">0</text><path d="M687.6999999999999 350v8" class="axis" /><text x="687.6999999999999" y="386" text-anchor="middle">2.1</text><path d="M853.0 350v8" class="axis" /><text x="853.0" y="386" text-anchor="middle">4</text><path d="M322.29999999999995 350V316.7930430192739" stroke="#b15a20" stroke-width="2" stroke-dasharray="6 4" /><path d="M687.6999999999999 350V316.7930430192739" stroke="#b15a20" stroke-width="2" stroke-dasharray="6 4" /><text x="500" y="62" text-anchor="middle">P = both shaded tails ≈ 0.0493</text><text x="500" y="420" text-anchor="middle">t statistic · 19 degrees of freedom</text><text x="500" y="457" text-anchor="middle" class="small">Observed |t| = 2.1 · normal independent observations</text></svg><p>The P value is the sum of both tail areas.</p>
 </section>
 <section id="the-natural-question-how-certain-is-the-hypothesis" class="slide level2">
 <h2>The natural question: how certain is the hypothesis?</h2>
@@ -1260,37 +1265,25 @@ display:block!important;
 </section>
 <section id="the-assumptions-quietly-treated-as-known" class="slide level2">
 <h2>The assumptions quietly treated as known</h2>
-<p>Traditional definitions emphasize the null hypothesis while</p>
+<p>Traditional definitions of the P value emphasize the null hypothesis part, while</p>
 <blockquote>
 <p>“treating all other assumptions used to compute the P value as if they were known to be correct.”</p>
 <p>— Greenland et al., p. 339</p>
 </blockquote>
+<p>Importantly:</p>
 <blockquote>
 <p>“this statistical model often incorporates unrealistic or at best unjustified assumptions.”</p>
 <p>— Greenland et al., p. 338</p>
 </blockquote>
-<p>The full model is <strong>H together with the other assumptions A</strong>, including:</p>
+<p>The full P value calculation is done assuming <strong>H together with the other assumptions A</strong>, including:</p>
 <ul>
 <li>Sampling, allocation, and dependence among observations.</li>
 <li>Measurement, missing data, and selection of analyses for reporting.</li>
 </ul>
-<p><strong>The calculation assumes these conditions are satisfied; it does not establish that they are.</strong></p>
+<p><strong>The P value calculation assumes these conditions are satisfied; it does not establish that they are.</strong></p>
 <div class="source">
 <p>Greenland et al. (2016), “Statistical models, hypotheses, and tests,” p. 338; “Uncertainty, probability, and statistical significance,” p. 339; quotation p. 339.</p>
 </div>
-<aside class="notes">
-<p>This is the central move in the primer: enlarge the object being checked from the targeted hypothesis to the entire model underlying the probability calculation. Assumptions are design-specific; not every study uses random sampling or random allocation. Randomization addresses allocation but cannot guarantee correct measurement, missing-data assumptions, or nonselective reporting. A is shorthand for a web of assumptions, not simply normality of regression residuals. The next slide develops the compatibility interpretation. The repeated-measurements example is added to explain what can go wrong when a calculation assumes independence that the study does not supply.</p>
-<style type="text/css">
-span.MJX_Assistive_MathML {
-position:absolute!important;
-clip: rect(1px, 1px, 1px, 1px);
-padding: 1px 0 0 0!important;
-border: 0!important;
-height: 1px!important;
-width: 1px!important;
-overflow: hidden!important;
-display:block!important;
-}</style></aside>
 </section>
 <section id="p-values-compatibility-with-the-entire-model" class="slide level2">
 <h2>P values: compatibility with the entire model</h2>
@@ -1365,17 +1358,24 @@ overflow: hidden!important;
 display:block!important;
 }</style></aside>
 </section>
-<section id="from-tests-to-estimates-and-confidence-intervals" class="slide level2">
-<h2>From tests to estimates and confidence intervals</h2>
-<p>Test a range of candidate effects, rather than only θ = 0. Inverting corresponding two-sided tests gives a <strong>95% confidence interval</strong>:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>0.95</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>D</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">{</mo><msub><mi>θ</mi><mn>0</mn></msub><mo>:</mo><msub><mi>p</mi><msub><mi>θ</mi><mn>0</mn></msub></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>D</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>&gt;</mo><mn>0.05</mn><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">C_{0.95}(D)=\{\theta_0:p_{\theta_0}(D)&gt;0.05\}.</annotation></semantics></math></p>
-<p><strong>Read the range:</strong> the null and substantial increases are both compatible with these data at this level, under the model. Effects outside the interval are less compatible by the corresponding test—not impossible.</p>
-<p><strong>Why “95%”?</strong> Across repeated valid applications, this procedure produces intervals covering the true effect 95% of the time. It does not assign a 95% probability to the effect lying in this particular interval.</p>
+<section id="from-tests-to-estimates-to-conf-intervals" class="slide level2">
+<h2>From tests to estimates to Conf Intervals</h2>
+<p>Test a range of candidate effects, rather than only θ = 0, and collect all values <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math> where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>P</mi><annotation encoding="application/x-tex">P</annotation></semantics></math> is large.</p>
+<p>For example, collect <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math> where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>&gt;</mo><mi>α</mi></mrow><annotation encoding="application/x-tex">P &gt; \alpha</annotation></semantics></math> (e.g. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\alpha=0.05</annotation></semantics></math>) then we get a (e.g.) <strong>95% confidence interval</strong>:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mi>θ</mi><mo>:</mo><mrow><mrow><mtext mathvariant="normal">P value under </mtext><mspace width="0.333em"></mspace></mrow><mi>θ</mi><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> </mtext><mspace width="0.333em"></mspace></mrow></mrow><mo>&gt;</mo><mn>0.05</mn><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">C =\{\theta: \text{P value under $\theta$ } &gt; 0.05\}.</annotation></semantics></math></p>
+<p><strong>Read the range:</strong> Effects in the interval are reasonably compatible with the data. Effects outside the interval are less compatible with the data.</p>
+
+<svg id="svg_b40a4b82983c8ec73886" role="img" aria-label="P-value curve for a normal estimate of 3 with known SE 2. Candidate effects from approximately minus 0.92 to 6.92 have P values above 0.05." alt="P-value curve for a normal estimate of 3 with known SE 2. Candidate effects from approximately minus 0.92 to 6.92 have P values above 0.05." viewBox="0 0 1000 480" aria-labelledby="title desc" width="1000" height="480"><title id="svg_b40a4b82983c8ec73886_title">A confidence interval from a P-value curve</title><desc id="svg_b40a4b82983c8ec73886_desc">For a normal estimate of 3 with known standard error 2, candidate effect sizes between approximately minus 0.92 and 6.92 have two-sided P values above 0.05. This is a compatibility curve, not a probability density for the effect.</desc><rect width="1000" height="480" fill="#fbfcfa" /><style>text{font-family:DejaVu Sans,sans-serif;fill:#183b46;font-size:20px}.small{font-size:17px}.axis{stroke:#183b46;stroke-width:2;fill:none}</style><text x="500" y="32" text-anchor="middle">Test each candidate hypothesis: θ = θ₀</text><rect x="261.4" y="65" width="487.20000000000005" height="275" fill="#dceee5" /><path d="M70 65V340H940" class="axis" /><polyline points="70.00,339.88 72.18,339.87 74.35,339.86 76.53,339.86 78.70,339.85 80.87,339.84 83.05,339.82 85.23,339.81 87.40,339.80 89.57,339.79 91.75,339.77 93.92,339.76 96.10,339.74 98.28,339.73 100.45,339.71 102.62,339.69 104.80,339.67 106.97,339.65 109.15,339.63 111.33,339.61 113.50,339.58 115.67,339.56 117.85,339.53 120.03,339.50 122.20,339.47 124.38,339.44 126.55,339.41 128.72,339.37 130.90,339.33 133.07,339.29 135.25,339.25 137.43,339.21 139.60,339.16 141.78,339.11 143.95,339.06 146.12,339.01 148.30,338.95 150.47,338.89 152.65,338.83 154.83,338.77 157.00,338.70 159.18,338.62 161.35,338.55 163.52,338.47 165.70,338.38 167.88,338.30 170.05,338.21 172.23,338.11 174.40,338.01 176.57,337.90 178.75,337.79 180.93,337.67 183.10,337.55 185.28,337.43 187.45,337.29 189.62,337.15 191.80,337.01 193.98,336.86 196.15,336.70 198.32,336.53 200.50,336.36 202.67,336.18 204.85,335.99 207.03,335.79 209.20,335.59 211.38,335.37 213.55,335.15 215.73,334.92 217.90,334.67 220.08,334.42 222.25,334.16 224.42,333.89 226.60,333.60 228.78,333.31 230.95,333.00 233.12,332.68 235.30,332.35 237.47,332.00 239.65,331.65 241.83,331.27 244.00,330.89 246.17,330.49 248.35,330.07 250.52,329.64 252.70,329.20 254.88,328.74 257.05,328.26 259.23,327.76 261.40,327.25 263.58,326.72 265.75,326.17 267.93,325.60 270.10,325.02 272.27,324.41 274.45,323.78 276.62,323.14 278.80,322.47 280.98,321.78 283.15,321.06 285.32,320.33 287.50,319.57 289.68,318.79 291.85,317.98 294.02,317.15 296.20,316.30 298.38,315.41 300.55,314.51 302.73,313.57 304.90,312.61 307.08,311.63 309.25,310.61 311.42,309.57 313.60,308.49 315.78,307.39 317.95,306.26 320.12,305.09 322.30,303.90 324.48,302.68 326.65,301.42 328.82,300.13 331.00,298.81 333.18,297.46 335.35,296.08 337.52,294.66 339.70,293.20 341.88,291.72 344.05,290.19 346.23,288.64 348.40,287.04 350.57,285.42 352.75,283.75 354.93,282.05 357.10,280.32 359.28,278.55 361.45,276.74 363.62,274.89 365.80,273.01 367.97,271.09 370.15,269.13 372.33,267.13 374.50,265.10 376.67,263.03 378.85,260.92 381.02,258.78 383.20,256.59 385.38,254.37 387.55,252.11 389.72,249.81 391.90,247.48 394.07,245.11 396.25,242.70 398.43,240.25 400.60,237.77 402.78,235.25 404.95,232.69 407.12,230.10 409.30,227.47 411.48,224.80 413.65,222.10 415.83,219.37 418.00,216.60 420.17,213.79 422.35,210.96 424.53,208.09 426.70,205.18 428.88,202.25 431.05,199.28 433.22,196.28 435.40,193.25 437.57,190.19 439.75,187.11 441.93,183.99 444.10,180.85 446.27,177.67 448.45,174.48 450.62,171.25 452.80,168.01 454.98,164.73 457.15,161.44 459.32,158.12 461.50,154.78 463.68,151.42 465.85,148.05 468.03,144.65 470.20,141.23 472.37,137.80 474.55,134.35 476.72,130.89 478.90,127.41 481.08,123.93 483.25,120.42 485.42,116.91 487.60,113.39 489.77,109.86 491.95,106.32 494.12,102.78 496.30,99.23 498.47,95.68 500.65,92.12 502.82,88.56 505.00,85.00 507.18,88.56 509.35,92.12 511.53,95.68 513.70,99.23 515.88,102.78 518.05,106.32 520.22,109.86 522.40,113.39 524.58,116.91 526.75,120.42 528.92,123.93 531.10,127.41 533.27,130.89 535.45,134.35 537.62,137.80 539.80,141.23 541.97,144.65 544.15,148.05 546.33,151.42 548.50,154.78 550.67,158.12 552.85,161.44 555.02,164.73 557.20,168.01 559.38,171.25 561.55,174.48 563.73,177.67 565.90,180.85 568.08,183.99 570.25,187.11 572.42,190.19 574.60,193.25 576.77,196.28 578.95,199.28 581.12,202.25 583.30,205.18 585.48,208.09 587.65,210.96 589.83,213.79 592.00,216.60 594.18,219.37 596.35,222.10 598.53,224.80 600.70,227.47 602.87,230.10 605.05,232.69 607.22,235.25 609.40,237.77 611.57,240.25 613.75,242.70 615.93,245.11 618.10,247.48 620.28,249.81 622.45,252.11 624.63,254.37 626.80,256.59 628.97,258.78 631.15,260.92 633.32,263.03 635.50,265.10 637.67,267.13 639.85,269.13 642.02,271.09 644.20,273.01 646.38,274.89 648.55,276.74 650.73,278.55 652.90,280.32 655.07,282.05 657.25,283.75 659.42,285.42 661.60,287.04 663.77,288.64 665.95,290.19 668.12,291.72 670.30,293.20 672.48,294.66 674.65,296.08 676.83,297.46 679.00,298.81 681.18,300.13 683.35,301.42 685.52,302.68 687.70,303.90 689.88,305.09 692.05,306.26 694.23,307.39 696.40,308.49 698.58,309.57 700.75,310.61 702.93,311.63 705.10,312.61 707.28,313.57 709.45,314.51 711.62,315.41 713.80,316.30 715.97,317.15 718.15,317.98 720.32,318.79 722.50,319.57 724.68,320.33 726.85,321.06 729.03,321.78 731.20,322.47 733.38,323.14 735.55,323.78 737.72,324.41 739.90,325.02 742.07,325.60 744.25,326.17 746.42,326.72 748.60,327.25 750.77,327.76 752.95,328.26 755.12,328.74 757.30,329.20 759.48,329.64 761.65,330.07 763.82,330.49 766.00,330.89 768.17,331.27 770.35,331.65 772.52,332.00 774.70,332.35 776.88,332.68 779.05,333.00 781.23,333.31 783.40,333.60 785.58,333.89 787.75,334.16 789.93,334.42 792.10,334.67 794.27,334.92 796.45,335.15 798.62,335.37 800.80,335.59 802.98,335.79 805.15,335.99 807.33,336.18 809.50,336.36 811.68,336.53 813.85,336.70 816.03,336.86 818.20,337.01 820.37,337.15 822.55,337.29 824.72,337.43 826.90,337.55 829.07,337.67 831.25,337.79 833.43,337.90 835.60,338.01 837.78,338.11 839.95,338.21 842.13,338.30 844.30,338.38 846.47,338.47 848.65,338.55 850.82,338.62 853.00,338.70 855.17,338.77 857.35,338.83 859.52,338.89 861.70,338.95 863.88,339.01 866.05,339.06 868.23,339.11 870.40,339.16 872.57,339.21 874.75,339.25 876.92,339.29 879.10,339.33 881.27,339.37 883.45,339.41 885.62,339.44 887.80,339.47 889.98,339.50 892.15,339.53 894.33,339.56 896.50,339.58 898.68,339.61 900.85,339.63 903.02,339.65 905.20,339.67 907.38,339.69 909.55,339.71 911.73,339.73 913.90,339.74 916.08,339.76 918.25,339.77 920.43,339.79 922.60,339.80 924.78,339.81 926.95,339.82 929.12,339.84 931.30,339.85 933.47,339.86 935.65,339.86 937.82,339.87 940.00,339.88" fill="none" stroke="#087e8b" stroke-width="4"></polyline><path d="M70 327.25H940" stroke="#b15a20" stroke-width="2" stroke-dasharray="7 5" /><text x="70.0" y="372" text-anchor="middle">-4</text><text x="318.57142857142856" y="372" text-anchor="middle">0</text><text x="505.0" y="372" text-anchor="middle">3</text><text x="753.5714285714286" y="372" text-anchor="middle">7</text><text x="940.0" y="372" text-anchor="middle">10</text><text x="58" y="347" text-anchor="end">0</text><text x="58" y="219.5" text-anchor="end">0.5</text><text x="58" y="92" text-anchor="end">1</text><text x="80" y="59" class="small">P value for testing θ = θ₀</text><text x="790" y="302" class="small">p = 0.05</text><text x="500" y="408" text-anchor="middle">Candidate effect θ₀ (outcome units)</text><text x="500" y="445" text-anchor="middle">95% CI: −0.92 to 6.92 · shaded candidate range</text><text x="500" y="474" text-anchor="middle" class="small">Estimate = 3, known SE = 2 · not a density for θ</text></svg></section>
+<section id="p-is-the-probability-the-hypothesis-is-true" class="slide level2">
+<h2>1. P is the probability the hypothesis is true</h2>
+<p><strong>Misconception:</strong> P = 0.01 means the null has a 1% probability of being true.</p>
+<p><strong>Correction:</strong> P describes discrepancies assuming the hypothesis and other model assumptions. It does not assign a probability to the hypothesis.</p>
+<p><strong>Remember:</strong> Keep the direction of conditioning straight.</p>
 <div class="source">
-<p>Greenland et al. (2016), “Moving from tests to estimates,” p. 340; interval interpretation, pp. 343–345. Normal illustration added.</p>
+<p>Greenland et al. (2016), misconception 1, p. 340. Brief paraphrase.</p>
 </div>
 <aside class="notes">
-<p>The main point is the move from testing only zero to displaying a range of effect sizes. The illustrative normal calculation assumes an exactly normal estimate with known SE; in other settings coverage may be approximate or conservative. The inversion display follows the source’s P greater than .05 convention; including boundary points in the conventional normal interval makes no substantive difference here. Three units and SE two match trial A in misconception 16, p. 343, not biological observations. “Substantial” depends on scientific context: the example permits increases up to nearly seven outcome units. Compatibility is conditional on assumptions and is not a posterior probability. The repeated-application coverage concerns the varying intervals and a fixed true parameter. Effects just outside an endpoint are almost as compatible as those just inside, so the endpoint is not a scientific cliff. This slide uses direct explanation rather than the unrelated null-focus quotation.</p>
+<p>Relate this to the earlier probability-of-data versus probability-of-hypothesis slide.</p>
 <style type="text/css">
 span.MJX_Assistive_MathML {
 position:absolute!important;
@@ -1387,6 +1387,564 @@ width: 1px!important;
 overflow: hidden!important;
 display:block!important;
 }</style></aside>
+</section>
+<section id="p-is-the-probability-that-chance-caused-the-result" class="slide level2">
+<h2>2. P is the probability that chance caused the result</h2>
+<p><strong>Misconception:</strong> P = 0.08 means an 8% chance that chance alone produced the association.</p>
+<p><strong>Correction:</strong> The calculation already assumes a model of chance variation, including the test hypothesis. It does not give the probability that this explanation is correct.</p>
+<p><strong>Remember:</strong> A probability derived from assumptions is not a probability of those assumptions.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 2, p. 340. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>Chance variation can coexist with real effects; avoid an either-chance-or-effect story.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="significance-establishes-that-the-hypothesis-is-false" class="slide level2">
+<h2>3. Significance establishes that the hypothesis is false</h2>
+<p><strong>Misconception:</strong> P ≤ 0.05 establishes that the tested hypothesis is false and must be rejected.</p>
+<p><strong>Correction:</strong> A small P flags unusual data under the joint model. Random variation, a false hypothesis, or another failed assumption can produce it.</p>
+<p><strong>Remember:</strong> Investigate the whole model before attributing the discrepancy to H.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 3, p. 341. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>A prespecified decision rule can reject at alpha, but that procedural decision is not proof of falsity or an automatic scientific conclusion.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="nonsignificance-establishes-that-the-hypothesis-is-true" class="slide level2">
+<h2>4. Nonsignificance establishes that the hypothesis is true</h2>
+<p><strong>Misconception:</strong> P &gt; 0.05 means the test hypothesis should be accepted as true.</p>
+<p><strong>Correction:</strong> The observed statistic is not unusual under that model. Many other effect sizes may also fit these data.</p>
+<p><strong>Remember:</strong> Failure to reject is not confirmation.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 4, p. 341. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>A large P can also result from imprecision or selection for nonsignificance.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="a-large-p-favors-the-tested-hypothesis" class="slide level2">
+<h2>5. A large P favors the tested hypothesis</h2>
+<p><strong>Misconception:</strong> A large P by itself is evidence favoring the tested hypothesis over alternatives.</p>
+<p><strong>Correction:</strong> A large P may simply reflect an inability to distinguish effects. Other hypotheses can have even larger P values under the same testing framework.</p>
+<p><strong>Remember:</strong> Assess the alternatives and the range of compatible effects directly.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 5, p. 341. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>This is the paper’s compatibility argument; it is not a claim that evidence for null effects is impossible under all inferential frameworks.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="p-0.05-means-no-effect-was-observed" class="slide level2">
+<h2>6. P &gt; 0.05 means no effect was observed</h2>
+<p><strong>Misconception:</strong> A nonsignificant null test demonstrates no association or effect.</p>
+<p><strong>Correction:</strong> The estimated effect can be far from zero even when its P value exceeds 0.05. The estimate and interval show what was observed and what remains unresolved.</p>
+<p><strong>Remember:</strong> Report the estimated effect instead of replacing it with “no effect.”</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 6, p. 341. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>Distinguish an observed association from a causal effect and from a population parameter.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="statistical-significance-means-scientific-importance" class="slide level2">
+<h2>7. Statistical significance means scientific importance</h2>
+<p><strong>Misconception:</strong> A significant result identifies a biologically important relationship.</p>
+<p><strong>Correction:</strong> With enough precision, tiny effects—or small assumption violations—can produce small P values.</p>
+<p><strong>Remember:</strong> Judge magnitude in biological units and against a meaningful effect size.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 7, p. 341. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>An effect estimate and its interval are needed to assess importance.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="nonsignificance-means-a-small-effect" class="slide level2">
+<h2>8. Nonsignificance means a small effect</h2>
+<p><strong>Misconception:</strong> If a result is not significant, its effect must be small.</p>
+<p><strong>Correction:</strong> Large effects may remain unresolved in noisy or small studies. A large P does not bound the effect size.</p>
+<p><strong>Remember:</strong> Check whether the interval still includes important effects.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 8, p. 341. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>This differs from item 6: the error here is inferring small magnitude, rather than claiming that no association was observed.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="p-is-the-probability-of-exactly-these-data" class="slide level2">
+<h2>9. P is the probability of exactly these data</h2>
+<p><strong>Misconception:</strong> P is the probability of obtaining precisely the observed result under the hypothesis.</p>
+<p><strong>Correction:</strong> P includes the observed discrepancy and discrepancies at least as extreme, according to the chosen statistic.</p>
+<p><strong>Remember:</strong> Think tail area, not density at one point.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 9, p. 341–342. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>Use the shaded t-distribution figure. For continuous data, the probability of an exact point is zero; the density at a point is not its P value.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="a-5-test-makes-a-discovery-95-reliable" class="slide level2">
+<h2>10. A 5% test makes a discovery 95% reliable</h2>
+<p><strong>Misconception:</strong> Rejecting at α = 0.05 means a 5% probability this finding is a false positive.</p>
+<p><strong>Correction:</strong> Alpha controls rejection frequency across repeated valid tests when the null is true. It does not give the probability that a particular discovery is false.</p>
+<p><strong>Remember:</strong> Error rates condition on hypotheses, not on this observed discovery.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 10, p. 342. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>The mix of true and false null hypotheses and the power under alternatives affect false-discovery proportions.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="p-0.05-and-p-0.05-convey-the-same-information" class="slide level2">
+<h2>11. P = 0.05 and P ≤ 0.05 convey the same information</h2>
+<p><strong>Misconception:</strong> Reporting an exact borderline value is equivalent to reporting only significance.</p>
+<p><strong>Correction:</strong> P ≤ 0.05 groups P = 0.05 with values such as P = 0.0001, which convey very different degrees of incompatibility.</p>
+<p><strong>Remember:</strong> Keep the numerical result rather than just the threshold label.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 11, p. 342. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>This concerns information lost in an inequality; it is distinct from item 12’s broader reporting recommendation.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="inequalities-are-the-best-way-to-report-p" class="slide level2">
+<h2>12. Inequalities are the best way to report P</h2>
+<p><strong>Misconception:</strong> Reporting only P &lt; 0.05 or P &gt; 0.05 is adequate.</p>
+<p><strong>Correction:</strong> These labels hide potentially important differences, such as P = 0.06 versus P = 0.70. Report numerical P values to sensible precision.</p>
+<p><strong>Remember:</strong> Very small values may reasonably be reported with an appropriate bound.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 12, p. 342. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>The paper allows inequalities for very small P values where further numerical precision is not useful or reliable.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="significance-belongs-to-the-biological-phenomenon" class="slide level2">
+<h2>13. Significance belongs to the biological phenomenon</h2>
+<p><strong>Misconception:</strong> A statistical test detects whether a biological effect is “significant.”</p>
+<p><strong>Correction:</strong> Statistical significance labels a test result at a chosen cutoff. It depends on study size, uncertainty, assumptions, and the analysis.</p>
+<p><strong>Remember:</strong> Describe the biological effect and the statistical result separately.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 13, p. 342. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>Avoid statements that treat significance as a stable intrinsic property of a population effect.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="tests-must-always-be-two-sided" class="slide level2">
+<h2>14. Tests must always be two-sided</h2>
+<p><strong>Misconception:</strong> A one-sided P value is always inappropriate.</p>
+<p><strong>Correction:</strong> A one-sided test can match a genuinely one-sided scientific question, such as whether an effect exceeds a specified boundary.</p>
+<p><strong>Remember:</strong> State and justify the direction; do not choose it after seeing the result.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 14, p. 342. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>The paper uses an at-least-as-good-as-standard treatment question. The relevant boundary or noninferiority margin must be scientifically defined.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="mostly-nonsignificant-studies-support-no-effect" class="slide level2">
+<h2>15. Mostly nonsignificant studies support no effect</h2>
+<p><strong>Misconception:</strong> If none or few of the studies are significant, the literature supports the null.</p>
+<p><strong>Correction:</strong> Combining information can reveal an association that individual imprecise studies do not resolve.</p>
+<p><strong>Remember:</strong> Synthesize estimates with attention to bias and heterogeneity; do not count significance labels.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 15, p. 342–343. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>The paper illustrates this with five P values of .10 combined by Fisher’s method, giving about .01 under its independence and validity assumptions.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="opposite-significance-labels-mean-conflicting-effects" class="slide level2">
+<h2>16. Opposite significance labels mean conflicting effects</h2>
+<p><strong>Misconception:</strong> P &lt; 0.05 in one study and P &gt; 0.05 in another establish disagreement.</p>
+<p><strong>Correction:</strong> The paper’s trials both estimate 3, but SEs 2 and 1 give P ≈ 0.13 and 0.003. The estimated effects agree exactly.</p>
+<p><strong>Remember:</strong> Estimate and test the difference between effects directly.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 16, p. 343. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>For these independent normal estimates the observed contrast is zero and its P value is one; this does not prove equality of population effects.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="identical-p-values-mean-agreeing-effects" class="slide level2">
+<h2>17. Identical P values mean agreeing effects</h2>
+<p><strong>Misconception:</strong> The same P value in two studies establishes agreement.</p>
+<p><strong>Correction:</strong> Estimates 3 (SE 1) and 12 (SE 4) both give P ≈ 0.003. Their direct contrast is 9, with P ≈ 0.03.</p>
+<p><strong>Remember:</strong> P values alone do not reveal agreement in effect size.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 17, p. 343. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>Paper example with independent normal estimates and known SEs. Contrast SE is sqrt(17); two-sided P is about .029.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="a-small-p-predicts-an-equally-small-replication-p" class="slide level2">
+<h2>18. A small P predicts an equally small replication P</h2>
+<p><strong>Misconception:</strong> A small P makes an equally small P likely in the next study.</p>
+<p><strong>Correction:</strong> An observed P is not a replication probability. Future P values depend on the true effect, study design, assumptions, and sampling variation.</p>
+<p><strong>Remember:</strong> Compare estimates and uncertainty, rather than demanding replication of a P value.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 18, p. 343. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>Under independent continuous valid tests of a true null, the next P is uniform; observing .03 does not make another P at most .03 more likely than 3%.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="this-interval-has-a-95-chance-of-containing-θ" class="slide level2">
+<h2>19. This interval has a 95% chance of containing θ</h2>
+<p><strong>Misconception:</strong> The observed frequentist 95% interval assigns 95% probability to containing the true effect.</p>
+<p><strong>Correction:</strong> The confidence level describes coverage of intervals across repeated valid studies. It does not by itself give a posterior probability for this interval.</p>
+<p><strong>Remember:</strong> A credible interval answers a different question using additional assumptions, including a prior.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 19, p. 343–344. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>Parameter fixed, interval varying in the coverage calculation. A posterior interpretation may coincide numerically under particular additional assumptions but does not follow from coverage alone.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="values-outside-the-ci-have-been-disproved" class="slide level2">
+<h2>20. Values outside the CI have been disproved</h2>
+<p><strong>Misconception:</strong> Every effect outside the 95% interval has been ruled out by the data.</p>
+<p><strong>Correction:</strong> Interval limits depend on assumptions and a chosen confidence level. Just outside and just inside an endpoint can be almost equally compatible.</p>
+<p><strong>Remember:</strong> Treat the endpoints as a reporting convention, not a boundary of possibility.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 20, p. 344. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>Return to the compatibility curve. Model misspecification may alter both the curve and the interval.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="overlapping-cis-mean-no-significant-difference" class="slide level2">
+<h2>21. Overlapping CIs mean no significant difference</h2>
+<p><strong>Misconception:</strong> If two 95% intervals overlap, their effects cannot differ significantly.</p>
+<p><strong>Correction:</strong> The paper’s intervals [1.04, 4.96] and [4.16, 19.84] overlap, yet the direct comparison gives P ≈ 0.03.</p>
+<p><strong>Remember:</strong> Calculate the contrast and its uncertainty, including covariance where needed.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 21, p. 344. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>The example uses independent normal estimates 3 and 12, with known SEs 1 and 4. The P value is about .029.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="a-95-ci-contains-95-of-future-estimates" class="slide level2">
+<h2>22. A 95% CI contains 95% of future estimates</h2>
+<p><strong>Misconception:</strong> This interval predicts where 95% of estimates from future studies will fall.</p>
+<p><strong>Correction:</strong> Coverage concerns the true effect, not future point estimates. In an ideal equal-SE normal example, repeated-pair inclusion is about 83%, not 95%.</p>
+<p><strong>Remember:</strong> Use a prediction calculation when the target is a future estimate.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 22, p. 344. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>For independent unbiased normal estimates of the same fixed effect with equal known SE s, their difference has SD sqrt(2)s. Unconditional inclusion is 2 Phi(1.96/sqrt(2)) − 1 ≈ .834; it is not a universal conditional probability for a specific observed interval.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="excluding-zero-makes-an-interval-more-precise" class="slide level2">
+<h2>23. Excluding zero makes an interval more precise</h2>
+<p><strong>Misconception:</strong> The interval excluding zero is necessarily more precise.</p>
+<p><strong>Correction:</strong> Precision is reflected by interval width on the appropriate scale. Crossing the null is a separate issue.</p>
+<p><strong>Remember:</strong> Compare widths: [5, 40] is wider than [−5, 10], despite excluding zero.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 23, p. 344. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>The paper has an arithmetic slip: 5 to 40 is 35 units wide, not 30. The second interval is 15 units wide. This slide avoids repeating the paper’s incorrect width and half-width claim.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="power-makes-a-null-conclusion-90-reliable" class="slide level2">
+<h2>24. 90% power makes a null conclusion 90% reliable</h2>
+<p><strong>Misconception:</strong> With 90% power, accepting the null after P &gt; 0.05 has only a 10% chance of error.</p>
+<p><strong>Correction:</strong> The 10% is the frequency of nonrejection when a specified alternative is true, under the design assumptions. It is not a probability that this null conclusion is wrong.</p>
+<p><strong>Remember:</strong> Power describes a design at an alternative, not the truth of an observed conclusion.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 24, p. 345. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>Define power before discussing it: probability before the study that the chosen testing rule rejects under a specified effect and model. It depends on the alternative, sample size, variability, and decision rule.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="nonsignificance-plus-high-power-favors-the-null" class="slide level2">
+<h2>25. Nonsignificance plus high power favors the null</h2>
+<p><strong>Misconception:</strong> P &gt; 0.05 and 90% power at an alternative establish support for the null over that alternative.</p>
+<p><strong>Correction:</strong> The observed data can be more compatible with the alternative despite a nonsignificant null test. Planned power does not compare the two hypotheses against these data.</p>
+<p><strong>Remember:</strong> Evaluate the null and meaningful alternatives directly using comparable measures.</p>
+<div class="source">
+<p>Greenland et al. (2016), misconception 25, p. 345. Brief paraphrase.</p>
+</div>
+<aside class="notes">
+<p>Added optional counterexample: known SE 1, two-sided alpha .05, design alternative 3.24 gives about 90% power. An estimate 1.8 yields P about .072 under zero and .150 under 3.24. Plug-in observed power is not independent evidence.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</section>
+<section id="assumptions-include-the-analysis-choices" class="slide level2">
+<h2>Assumptions include the analysis choices</h2>
+<blockquote>
+<p>“All statistical methods (whether frequentist or Bayesian, or for testing or estimation, or for inference or decision) make extensive assumptions about the sequence of events that led to the results presented—not only in the data generation, but in the analysis choices.”</p>
+</blockquote>
+<p><strong>For critical evaluation, describe the full path to the result:</strong></p>
+<ul>
+<li>Study motivation and design.</li>
+<li>Original analysis plan and inclusion/exclusion criteria.</li>
+<li>All analyses conducted.</li>
+</ul>
+<div class="source">
+<p>Greenland et al. (2016), closing guideline (g), p. 347. Quotation excerpt; reporting points paraphrased. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4877414/">Paper</a>.</p>
+</div>
+</section>
+<section id="asa-2016-using-p-values-responsibly" class="slide level2">
+<h2>ASA (2016): using P values responsibly</h2>
+<ol type="1">
+<li>P-values can indicate how incompatible the data are with a specified statistical model.</li>
+<li>P-values do not measure the probability that the studied hypothesis is true, or the probability that the data were produced by random chance alone.</li>
+<li>Scientific conclusions and business or policy decisions should not be based only on whether a p-value passes a specific threshold.</li>
+<li>Proper inference requires full reporting and transparency.</li>
+<li>A p-value, or statistical significance, does not measure the size of an effect or the importance of a result.</li>
+<li>By itself, a p-value does not provide a good measure of evidence regarding a model or hypothesis.</li>
+</ol>
+<p>Also (my own opinion): present P values as continuous measures of incompatibility.</p>
+<div class="source">
+<p>Wasserstein &amp; Lazar (2016), ASA Statement, principles 1–6. Paraphrased summary. <a href="https://doi.org/10.1080/00031305.2016.1154108">Statement</a>; <a href="https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf">ASA summary</a>.</p>
+</div>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 

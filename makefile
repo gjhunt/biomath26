@@ -12,15 +12,20 @@ export XDG_DATA_HOME := $(CURDIR)/.local/share
 all: slides
 slides: $(HTML)
 
-$(HTML): $(NOTEBOOK) slides.css makefile
+FIGURES := figures/p_value_tails.svg figures/ci_compatibility.svg
+
+$(FIGURES) &: scripts/create_figures.py
+	$(PYTHON) scripts/create_figures.py
+
+$(HTML): $(NOTEBOOK) slides.css makefile $(FIGURES)
 	$(QUARTO) render $(NOTEBOOK) --to revealjs --output $(HTML)
 
 preview: slides
 	$(QUARTO) preview $(NOTEBOOK) --to revealjs
 
-# Optional: overwrites notebook edits with the original authored version.
+# Rebuild figures without overwriting the editable notebook.
 regenerate:
-	$(PYTHON) scripts/create_notebook.py
+	$(PYTHON) scripts/create_figures.py
 
 clean:
 	$(RM) $(HTML)
