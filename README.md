@@ -27,6 +27,13 @@ The separate notebook fixes a tiny true effect (0.001 SD), varies N from 100 to 
 
 ## Build and present
 
+## Short simulations for misconceptions #18 and #19
+
+- `misconception_18_replication.ipynb` simulates independent first and replication studies to show that a small P value in one study does not predict a similarly small P value in the next. The replication significance rate is governed by power at the assumed true effect.
+- `misconception_19_ci_coverage.ipynb` simulates repeated 95% confidence intervals for a fixed true mean, illustrating long-run coverage and the distinction between that coverage and the interpretation of one observed interval.
+
+Open either notebook in Jupyter with a Python 3 kernel. They use the same dependencies listed in `requirements-simulation.txt`; seeds and study parameters can be edited in the notebooks.
+
 With Quarto installed (tested with 1.6.39), Python 3, and GNU Make 4.3 or later:
 
 ```sh
